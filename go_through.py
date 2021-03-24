@@ -26,10 +26,9 @@ def click_and_crop(event, x, y, flags, param):
 
 
 names = ['ControlGroup', 'ExperimentalGroup']
-DATE = '03.08.2021'
+DATE = '03.22.2021'
 PATH = f'C:\\Users\\Student\\Desktop\\experiment_fishcolor\\{DATE}\\ExperimentalGroup\\'
-SIZE = (100, 150)  # input size in format (x/2,y/2)
-
+SIZE = (100, 150)  # input size in format (x/2,y/2)qqqq
 path1 = os.path.normpath(PATH)
 for dirpath, dirnames, filenames in os.walk(path1):
     for file in filenames:
