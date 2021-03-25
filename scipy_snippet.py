@@ -78,6 +78,8 @@ def save_image(name, image):
 if __name__ == '__main__':
     image = 'two_circle_binary.jpeg'
     kernel = np.ones((5, 5), np.uint8)
+    # kernel_test = cv2.getStructuringElement(cv2.MORPH_CROSS, ksize=(11, 11))
+    # print(kernel_test)
     img = cv2.imread(image)
     dilation(img=img, kernel=kernel)
     erosion(img=img, kernel=kernel)
