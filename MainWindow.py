@@ -1,5 +1,6 @@
 import sys
 import os
+from datetime import datetime
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
@@ -8,6 +9,7 @@ from PySide6.QtGui import QPixmap
 import numpy as np
 
 from main_window import Ui_MainWindow as mwindow
+from Dialog import StepByStep
 from scipy_snippet import *
 from step_by_step import step_by_step
 
@@ -15,7 +17,10 @@ from step_by_step import step_by_step
 class MyWindow(QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
+
         self.kernel = np.ones((5, 5), np.uint8)
+        self.current_date = f'{datetime.year}.{datetime.month}.{datetime.day}'
+        self.current_method = dilation
         self.image_bw = None
         self.dilation = None
         self.erosion = None
@@ -30,7 +35,6 @@ class MyWindow(QMainWindow):
 
     def __setup_ui(self):
         self.ui.choseimButton.clicked.connect(self.__chose_image)
-
         self.ui.dilationButton.clicked.connect(self.__dilation_clicked)
         self.ui.erosionButton.clicked.connect(self.__erosion_clicked)
         self.ui.openingButton.clicked.connect(self.__opening_clicked)
@@ -38,72 +42,80 @@ class MyWindow(QMainWindow):
         self.ui.morphButton.clicked.connect(self.__morph_gradient_clicked)
         self.ui.blackhatButton.clicked.connect(self.__black_hat_clicked)
         self.ui.tophatButton.clicked.connect(self.__top_hat_clicked)
-
         self.ui.stepButton.clicked.connect(self.__step_by_step_clicked)
 
     def __chose_image(self):
         if not self.dilation:
             dir = os.getcwd()
             path = QFileDialog.getOpenFileName(self, 'Open Image', dir, "Image Files (*.png *.jpg *.bmp *.jpeg)")
-            self.image_bw = read_and_save(path[0])
+            self.image = path[0]
+            self.image_bw = read_and_save(self.image)
             image = QPixmap(self.image_bw)
             new_image = image.scaled(540, 249, Qt.KeepAspectRatio, Qt.FastTransformation)
-        self.put_image(widget=self.ui.sourceLabel, image=self.image_bw)
+        self.put_image(widget=self.ui.sourceLabel, image=self.image)
 
     def __dilation_clicked(self):
+        self.current_method = dilation
+        self.dilation = dilation(
+            self.image_bw,
+            self.kernel)
         self.put_image(widget=self.ui.resultLabel,
-                       image=self.dilation) if self.dilation is not None else self.put_image(widget=self.ui.resultLabel,
-                                                                                             image=dilation(
-                                                                                                 self.image_bw,
-                                                                                                 self.kernel))
+                       image=self.dilation)
 
     def __erosion_clicked(self):
+        self.current_method = erosion
+        self.erosion = erosion(
+            self.image_bw,
+            self.kernel)
         self.put_image(widget=self.ui.resultLabel,
-                       image=self.erosion) if self.erosion is not None else self.put_image(widget=self.ui.resultLabel,
-                                                                                           image=erosion(
-                                                                                               self.image_bw,
-                                                                                               self.kernel))
+                       image=self.erosion)
 
     def __opening_clicked(self):
+        self.current_method = opening
+        self.opening = opening(
+            self.image_bw,
+            self.kernel)
         self.put_image(widget=self.ui.resultLabel,
-                       image=self.opening) if self.opening is not None else self.put_image(widget=self.ui.resultLabel,
-                                                                                           image=opening(
-                                                                                               self.image_bw,
-                                                                                               self.kernel))
+                       image=self.opening)
 
     def __closing_clicked(self):
+        self.current_method = closing
+        self.closing = closing(
+            self.image_bw,
+            self.kernel)
         self.put_image(widget=self.ui.resultLabel,
-                       image=self.closing) if self.closing is not None else self.put_image(widget=self.ui.resultLabel,
-                                                                                           image=closing(
-                                                                                               self.image_bw,
-                                                                                               self.kernel))
+                       image=self.closing)
 
     def __morph_gradient_clicked(self):
+        self.current_method = morph_gradient
+        self.grad = morph_gradient(
+            self.image_bw,
+            self.kernel)
         self.put_image(widget=self.ui.resultLabel,
-                       image=self.grad) if self.grad is not None else self.put_image(widget=self.ui.resultLabel,
-                                                                                     image=morph_gradient(
-                                                                                         self.image_bw,
-                                                                                         self.kernel))
+                       image=self.grad)
 
     def __black_hat_clicked(self):
+        self.current_method = black_hat
+        self.blackhat = black_hat(
+            self.image_bw,
+            self.kernel)
         self.put_image(widget=self.ui.resultLabel,
-                       image=self.blackhat) if self.blackhat is not None else self.put_image(widget=self.ui.resultLabel,
-                                                                                             image=black_hat(
-                                                                                                 self.image_bw,
-                                                                                                 self.kernel))
+                       image=self.blackhat)
 
     def __top_hat_clicked(self):
+        self.current_method = top_hat
+        self.tophat = top_hat(
+            self.image_bw,
+            self.kernel)
         self.put_image(widget=self.ui.resultLabel,
-                       image=self.tophat) if self.tophat is not None else self.put_image(widget=self.ui.resultLabel,
-                                                                                         image=top_hat(
-                                                                                             self.image_bw,
-                                                                                             self.kernel))
+                       image=self.tophat)
 
     def clear_label(self):
-        pass
+        self.ui.sourceLabel.setText('Chose Your Image by pressing button bellow!')
 
     def __step_by_step_clicked(self):
-        step_by_step()
+        dialog = StepByStep(image=self.image, method=self.current_method)
+        dialog.exec_()
 
     @staticmethod
     def put_image(widget, image):

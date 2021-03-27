@@ -1,66 +1,72 @@
 import numpy as np
-import scipy.ndimage as snd
-from PIL import Image
+
+from datetime import datetime
 import cv2
 
 
-def read_and_save(image):
-    img = cv2.imread(image)
-    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    (thresh, img_bw) = cv2.threshold(img_gray, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+def read_and_save(img):
+    image = cv2.imread(img, 0)
+    ret, trash = cv2.threshold(image, 240, 255, cv2.THRESH_BINARY)
     # img_bw - binary version of original image
-    im_name = image.split('.')[0]
-    cv2.imwrite(f'{im_name}_binary.jpeg', img_bw)
+    im_name = 'Result_image/' + img.split('.')[0]
+    cv2.imwrite(f'{im_name}_binary.jpeg', trash)
     return f'{im_name}_binary.jpeg'
 
 
-def dilation(img, kernel):
+def dilation(img, kernel, iter=3):
     image = cv2.imread(img)
-    dilation_image = cv2.dilate(image, kernel, iterations=3)
-    save_image(f'{img.split(".")[0]}_dilation.jpeg', dilation_image)
-    return f'{img.split(".")[0]}_dilation.jpeg'
+    dilation_image = cv2.dilate(image, kernel, iterations=iter)
+    im_name = 'Result_image/' + img.split('.')[0]
+    save_image(f'{im_name}_dilate.jpeg', dilation_image)
+    return f'{im_name}_dilate.jpeg'
 
 
-def erosion(img, kernel):
+def erosion(img, kernel, iter=3):
     image = cv2.imread(img)
-    erosion_image = cv2.erode(image, kernel, iterations=3)
-    save_image(f'{img.split(".")[0]}_erode.jpeg', erosion_image)
-    return f'{img.split(".")[0]}_erode.jpeg'
+    erosion_image = cv2.erode(image, kernel, iterations=iter)
+    im_name = 'Result_image/' + img.split('.')[0]
+    save_image(f'{im_name}_erode.jpeg', erosion_image)
+    return f'{im_name}_erode.jpeg'
 
 
-def opening(img, kernel):
+def opening(img, kernel, iter=3):
     image = cv2.imread(img)
-    opening = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel)
-    save_image(f'{img.split(".")[0]}_opened.jpeg', opening)
-    return f'{img.split(".")[0]}_opened.jpeg'
+    opening = cv2.morphologyEx(image, cv2.MORPH_OPEN, kernel, iterations=iter)
+    im_name = 'Result_image/' + img.split('.')[0]
+    save_image(f'{im_name}_open.jpeg', opening)
+    return f'{im_name}_open.jpeg'
 
 
-def closing(img, kernel):
+def closing(img, kernel, iter=3):
     image = cv2.imread(img)
-    closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
-    save_image(f'{img.split(".")[0]}_closed.jpeg', closing)
-    return f'{img.split(".")[0]}_closed.jpeg'
+    closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel, iterations=iter)
+    im_name = 'Result_image/' + img.split('.')[0]
+    save_image(f'{im_name}_close.jpeg', closing)
+    return f'{im_name}_close.jpeg'
 
 
-def morph_gradient(img, kernel):
+def morph_gradient(img, kernel, iter=3):
     image = cv2.imread(img)
-    grad = cv2.morphologyEx(image, cv2.MORPH_GRADIENT, kernel)
-    save_image(f'{img.split(".")[0]}_grad.jpeg', grad)
-    return f'{img.split(".")[0]}_grad.jpeg'
+    grad = cv2.morphologyEx(image, cv2.MORPH_GRADIENT, kernel, iterations=iter)
+    im_name = 'Result_image/' + img.split('.')[0]
+    save_image(f'{im_name}_grad.jpeg', grad)
+    return f'{im_name}_grad.jpeg'
 
 
-def top_hat(img, kernel):
+def top_hat(img, kernel, iter=3):
     image = cv2.imread(img)
-    tophat = cv2.morphologyEx(image, cv2.MORPH_TOPHAT, kernel)
-    save_image(f'{img.split(".")[0]}_tophat.jpeg', tophat)
-    return f'{img.split(".")[0]}_tophat.jpeg'
+    tophat = cv2.morphologyEx(image, cv2.MORPH_TOPHAT, kernel, iterations=iter)
+    im_name = 'Result_image/' + img.split('.')[0]
+    save_image(f'{im_name}_tophat.jpeg', tophat)
+    return f'{im_name}_tophat.jpeg'
 
 
-def black_hat(img, kernel):
+def black_hat(img, kernel, iter=3):
     image = cv2.imread(img)
-    blackhat = cv2.morphologyEx(image, cv2.MORPH_BLACKHAT, kernel)
-    save_image(f'{img.split(".")[0]}_tophat.jpeg', blackhat)
-    return f'{img.split(".")[0]}_tophat.jpeg'
+    blackhat = cv2.morphologyEx(image, cv2.MORPH_BLACKHAT, kernel, iterations=iter)
+    im_name = 'Result_image/' + img.split('.')[0]
+    save_image(f'{im_name}_blackhat.jpeg', blackhat)
+    return f'{im_name}_blackhat.jpeg'
 
 
 def kernel_rect(size):
@@ -76,15 +82,12 @@ def save_image(name, image):
 
 
 if __name__ == '__main__':
-    image = 'two_circle_binary.jpeg'
+    img = 'two_circle.jpeg'
     kernel = np.ones((5, 5), np.uint8)
-    # kernel_test = cv2.getStructuringElement(cv2.MORPH_CROSS, ksize=(11, 11))
-    # print(kernel_test)
-    img = cv2.imread(image)
-    dilation(img=img, kernel=kernel)
-    erosion(img=img, kernel=kernel)
-    opening(img=img, kernel=kernel)
-    closing(img=img, kernel=kernel)
-    morph_gradient(img=img, kernel=kernel)
-    top_hat(img=img, kernel=kernel)
-    cv2.waitKey()
+    d = dilation(img=img, kernel=kernel)
+    e = erosion(img=img, kernel=kernel)
+    o = opening(img=img, kernel=kernel)
+    c = closing(img=img, kernel=kernel)
+    m = morph_gradient(img=img, kernel=kernel)
+    t = top_hat(img=img, kernel=kernel)
+    b = black_hat(img=img, kernel=kernel)

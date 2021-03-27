@@ -10,6 +10,7 @@ import numpy as np
 import cv2
 
 from Dialog_steps import Ui_Dialog as StepDialog
+from scipy_snippet import dilation
 
 
 class StepByStep(QDialog):
@@ -119,12 +120,14 @@ class StepByStep(QDialog):
         Автоматически применяем выставленные настройки
         и показываем результат в зависимости от количества итераций
         '''
-        image = cv2.imread(self.info['STEP#0'], 0)
+        image = self.info['STEP#0']
         kern = self.kernels_code[self.ui.minSlider.sliderPosition()]
         self.info['kernel'] = cv2.getStructuringElement(kern, ksize=self.size)
-        processed_image = self.info['method'](src=image, kernel=self.info['kernel'], iterations=iteration)
-        name = f'STEP3_RESULT.jpeg'
-        cv2.imwrite(name, processed_image)
+        processed_image = self.info['method'](img=image, kernel=self.info['kernel'], iter=iteration)
+        img_to_save = cv2.imread(processed_image)
+        name = 'STEP3_RESULT_COLOR.jpeg'
+        cv2.imwrite(name, img_to_save)
+        self.info[self.current_step] = img_to_save
         self.put_image_next(image=name)
 
     def renew_max(self, x):
@@ -211,7 +214,7 @@ class StepByStep(QDialog):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    dialog = StepByStep(image='two_circle.jpeg', method=cv2.dilate)
+    dialog = StepByStep(image='3object.jpg', method=dilation)
     dialog.show()
 
     sys.exit(app.exec_())
