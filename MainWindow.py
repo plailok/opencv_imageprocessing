@@ -9,7 +9,7 @@ from PySide6.QtGui import QPixmap
 import numpy as np
 
 from main_window import Ui_MainWindow as mwindow
-from Dialog import StepByStep
+from Dialog import StepByStep, CreateKernel
 from scipy_snippet import *
 from step_by_step import step_by_step
 
@@ -19,6 +19,7 @@ class MyWindow(QMainWindow):
         super(MyWindow, self).__init__()
 
         self.kernel = np.ones((5, 5), np.uint8)
+        self.dir = os.getcwd()
         self.current_date = f'{datetime.year}.{datetime.month}.{datetime.day}'
         self.current_method = dilation
         self.image_bw = None
@@ -42,17 +43,19 @@ class MyWindow(QMainWindow):
         self.ui.morphButton.clicked.connect(self.__morph_gradient_clicked)
         self.ui.blackhatButton.clicked.connect(self.__black_hat_clicked)
         self.ui.tophatButton.clicked.connect(self.__top_hat_clicked)
-        self.ui.stepButton.clicked.connect(self.__step_by_step_clicked)
+
 
     def __chose_image(self):
-        if not self.dilation:
-            dir = os.getcwd()
-            path = QFileDialog.getOpenFileName(self, 'Open Image', dir, "Image Files (*.png *.jpg *.bmp *.jpeg)")
-            self.image = path[0]
-            self.image_bw = read_and_save(self.image)
-            image = QPixmap(self.image_bw)
-            new_image = image.scaled(540, 249, Qt.KeepAspectRatio, Qt.FastTransformation)
-        self.put_image(widget=self.ui.sourceLabel, image=self.image)
+        dir = os.getcwd()
+        path = QFileDialog.getOpenFileName(self, 'Open Image', dir, "Image Files (*.png *.jpg *.bmp *.jpeg)")
+        self.image = path[0].split('/')[-1]
+        im = cv2.imread(self.image, 0)
+        ret, trash = cv2.threshold(im, 240, 255, cv2.THRESH_BINARY)
+        self.image_bw = self.image.split('.')[0] + '_binary.jpg'
+        cv2.imwrite(self.image_bw, trash)
+        image = QPixmap(self.image_bw)
+        new_image = image.scaled(540, 249, Qt.KeepAspectRatio, Qt.FastTransformation)
+        self.put_image(widget=self.ui.sourceLabel, image=new_image)
 
     def __dilation_clicked(self):
         self.current_method = dilation
@@ -109,6 +112,10 @@ class MyWindow(QMainWindow):
             self.kernel)
         self.put_image(widget=self.ui.resultLabel,
                        image=self.tophat)
+
+    def __change_kenrel_clicked(self):
+        Dialog = CreateKernel()
+        Dialog.exec_()
 
     def clear_label(self):
         self.ui.sourceLabel.setText('Chose Your Image by pressing button bellow!')

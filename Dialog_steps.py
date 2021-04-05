@@ -19,31 +19,31 @@ class Ui_Dialog(object):
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(1014, 720)
         Dialog.setStyleSheet(u"QPushButton {\n"
-"	color: red;\n"
-"	font: bold, 14px;\n"
-"}\n"
-"QDialog{\n"
-"	background-color:black}\n"
-"QFrame {\n"
-"	background-color: grey;}\n"
-"QGroupBox{\n"
-"	background-color: gray;	\n"
-"}\n"
-"QGroupBox::title {\n"
-"    subcontrol-origin: margin;\n"
-"	subcontrol-position: top-center;\n"
-"    padding: 2 10px;\n"
-"	border-radius: 10px;\n"
-"	color: red;\n"
-"	font: 75 12pt \"Arial\";\n"
-"    background-color: rgb(20,20,20);\n"
-"}\n"
-"QLabel {\n"
-"	color: red;\n"
-"	background-color: black;\n"
-"	font: 14px, bold;\n"
-"}\n"
-"")
+                             "	color: red;\n"
+                             "	font: bold, 14px;\n"
+                             "}\n"
+                             "QDialog{\n"
+                             "	background-color:black}\n"
+                             "QFrame {\n"
+                             "	background-color: grey;}\n"
+                             "QGroupBox{\n"
+                             "	background-color: gray;	\n"
+                             "}\n"
+                             "QGroupBox::title {\n"
+                             "    subcontrol-origin: margin;\n"
+                             "	subcontrol-position: top-center;\n"
+                             "    padding: 2 10px;\n"
+                             "	border-radius: 10px;\n"
+                             "	color: red;\n"
+                             "	font: 75 12pt \"Arial\";\n"
+                             "    background-color: rgb(20,20,20);\n"
+                             "}\n"
+                             "QLabel {\n"
+                             "	color: red;\n"
+                             "	background-color: black;\n"
+                             "	font: 14px, bold;\n"
+                             "}\n"
+                             "")
         self.gridLayout = QGridLayout(Dialog)
         self.gridLayout.setObjectName(u"gridLayout")
         self.NextStepBox = QGroupBox(Dialog)
@@ -53,8 +53,7 @@ class Ui_Dialog(object):
         self.nextStepLabel = QLabel(self.NextStepBox)
         self.nextStepLabel.setObjectName(u"nextStepLabel")
 
-        self.gridLayout_5.addWidget(self.nextStepLabel, 0, 0, 1, 1, Qt.AlignHCenter|Qt.AlignVCenter)
-
+        self.gridLayout_5.addWidget(self.nextStepLabel, 0, 0, 1, 1, Qt.AlignHCenter | Qt.AlignVCenter)
 
         self.gridLayout.addWidget(self.NextStepBox, 1, 0, 1, 1)
 
@@ -62,18 +61,18 @@ class Ui_Dialog(object):
         self.ButtonsBox.setObjectName(u"ButtonsBox")
         self.ButtonsBox.setMinimumSize(QSize(0, 250))
         self.ButtonsBox.setStyleSheet(u"QPushButton {\n"
-"	min-width: 100px;\n"
-"	min-height: 50px;\n"
-"	border-style:inset;\n"
-"	border-radius: 10px;\n"
-"	border-width: 2px;\n"
-"	background-color: rgb(20,20,20)	;\n"
-"}\n"
-"QPushButton:pressed {\n"
-"	border-color: blue;\n"
-"}\n"
-"QPushButton:checked {\n"
-"	border-color: green;}")
+                                      "	min-width: 100px;\n"
+                                      "	min-height: 50px;\n"
+                                      "	border-style:inset;\n"
+                                      "	border-radius: 10px;\n"
+                                      "	border-width: 2px;\n"
+                                      "	background-color: rgb(20,20,20)	;\n"
+                                      "}\n"
+                                      "QPushButton:pressed {\n"
+                                      "	border-color: blue;\n"
+                                      "}\n"
+                                      "QPushButton:checked {\n"
+                                      "	border-color: green;}")
         self.gridLayout_2 = QGridLayout(self.ButtonsBox)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.verticalLayout = QVBoxLayout()
@@ -109,9 +108,7 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addWidget(self.exitButton)
 
-
         self.gridLayout_2.addLayout(self.verticalLayout, 0, 0, 1, 1)
-
 
         self.gridLayout.addWidget(self.ButtonsBox, 0, 1, 1, 1)
 
@@ -122,8 +119,7 @@ class Ui_Dialog(object):
         self.currentStepLabel = QLabel(self.currStepBox)
         self.currentStepLabel.setObjectName(u"currentStepLabel")
 
-        self.gridLayout_3.addWidget(self.currentStepLabel, 0, 0, 1, 1, Qt.AlignHCenter|Qt.AlignVCenter)
-
+        self.gridLayout_3.addWidget(self.currentStepLabel, 0, 0, 1, 1, Qt.AlignHCenter | Qt.AlignVCenter)
 
         self.gridLayout.addWidget(self.currStepBox, 0, 0, 1, 1)
 
@@ -136,23 +132,23 @@ class Ui_Dialog(object):
         self.threshholderBox.setObjectName(u"threshholderBox")
         self.threshholderBox.setMinimumSize(QSize(0, 250))
         self.threshholderBox.setStyleSheet(u"QSlider::groove:horizontal {\n"
-"    border: 1px solid #999999;\n"
-"    height: 8px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */\n"
-"    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #B1B1B1, stop:1 #c4c4c4);\n"
-"    margin: 2px 0;\n"
-"}\n"
-"\n"
-"QSlider::handle:vertical {\n"
-"    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #b4b4b4, stop:1 #8f8f8f);\n"
-"    border: 1px solid #5c5c5c;\n"
-"    width: 18px;\n"
-"    margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
-"    border-radius: 3px;\n"
-"}\n"
-"QLabel{\n"
-"	\n"
-"	font: 75 12pt \"Rockwell Nova\";\n"
-"}")
+                                           "    border: 1px solid #999999;\n"
+                                           "    height: 8px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */\n"
+                                           "    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #B1B1B1, stop:1 #c4c4c4);\n"
+                                           "    margin: 2px 0;\n"
+                                           "}\n"
+                                           "\n"
+                                           "QSlider::handle:vertical {\n"
+                                           "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #b4b4b4, stop:1 #8f8f8f);\n"
+                                           "    border: 1px solid #5c5c5c;\n"
+                                           "    width: 18px;\n"
+                                           "    margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
+                                           "    border-radius: 3px;\n"
+                                           "}\n"
+                                           "QLabel{\n"
+                                           "	\n"
+                                           "	font: 75 12pt \"Rockwell Nova\";\n"
+                                           "}")
         self.gridLayout_4 = QGridLayout(self.threshholderBox)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout_4.setContentsMargins(11, -1, -1, -1)
@@ -209,6 +205,7 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
 
         QMetaObject.connectSlotsByName(Dialog)
+
     # setupUi
 
     def retranslateUi(self, Dialog):
@@ -229,4 +226,3 @@ class Ui_Dialog(object):
         self.minvalueLabel.setText(QCoreApplication.translate("Dialog", u"CURRENT", None))
         self.maxvalueLabel.setText(QCoreApplication.translate("Dialog", u"CURRENT", None))
     # retranslateUi
-

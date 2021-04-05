@@ -5,10 +5,12 @@ import cv2
 
 
 def read_and_save(img):
+    print(img)
     image = cv2.imread(img, 0)
     ret, trash = cv2.threshold(image, 240, 255, cv2.THRESH_BINARY)
     # img_bw - binary version of original image
-    im_name = 'Result_image/' + img.split('.')[0]
+    im_name = '\\Result_image\\' + img.split('.')[0]
+    print(im_name)
     cv2.imwrite(f'{im_name}_binary.jpeg', trash)
     return f'{im_name}_binary.jpeg'
 

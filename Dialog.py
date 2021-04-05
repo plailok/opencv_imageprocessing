@@ -1,16 +1,57 @@
 import sys
-from PIL import Image as im
-import os
 
 from PySide6 import QtWidgets
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog
+from PySide6.QtWidgets import QApplication, QDialog
 from PySide6.QtGui import QPixmap
-import numpy as np
+
 import cv2
 
 from Dialog_steps import Ui_Dialog as StepDialog
-from scipy_snippet import dilation
+from Dialog_createkernel import Ui_Dialog as CreateKernelDialog
+
+
+class CreateKernel(QDialog):
+
+    def __init__(self, current_kernel=('Rectangle', 7, 7)):
+        super(CreateKernel, self).__init__()
+        self.ui = CreateKernelDialog()
+        self.ui.setupUi(self)
+        self.kernels_name = ['Rectangle', 'Ellipse', 'Cross']
+        self.kernels_code = [cv2.MORPH_RECT, cv2.MORPH_ELLIPSE, cv2.MORPH_CROSS]
+        self.colors = ['red', 'green', 'blue']
+        self.x = current_kernel[1]
+        self.y = current_kernel[2]
+        self.current_index = self.kernels_name.index(current_kernel[0])
+        self.kernel = self.kernels_code[self.current_index]
+        print(self.x, self.y, self.kernel)
+        self.__setup_ui()
+
+    def __setup_ui(self):
+        self.ui.typeButton.setText('Rectangle')
+        self.ui.xSpinBox.valueChanged.connect(self.__x_changed)
+        self.ui.xSpinBox.setMinimum(1)
+        self.ui.xSpinBox.setMaximum(35)
+        self.ui.xSpinBox.setSingleStep(2)
+        self.ui.ySpinBox.valueChanged.connect(self.__y_changed)
+        self.ui.ySpinBox.setMinimum(1)
+        self.ui.ySpinBox.setMaximum(35)
+        self.ui.ySpinBox.setSingleStep(2)
+        self.ui.typeButton.clicked.connect(self.__kernel_changed)
+        self.ui.OKButton.clicked.connect(self.accept)
+        self.ui.CancelButton.clicked.connect(self.rejected)
+
+    def __x_changed(self, x):
+        self.x = x
+
+    def __y_changed(self, y):
+        self.y = y
+
+    def __kernel_changed(self):
+        self.current_index = self.current_index + 1 if self.current_index != 2 else 0
+        self.ui.typeButton.setStyleSheet(f'border-color:{self.colors[self.current_index]}')
+        self.ui.typeButton.setText(self.kernels_name[self.current_index])
+        self.kernel = self.kernels_code[self.current_index]
 
 
 class StepByStep(QDialog):
@@ -214,7 +255,13 @@ class StepByStep(QDialog):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    dialog = StepByStep(image='3object.jpg', method=dilation)
+    dialog = CreateKernel()
+    # dialog = StepByStep(image='3object.jpg', method=dilation)
     dialog.show()
+    rsp = dialog.exec_()
+    if rsp == QtWidgets.QDialog.Accepted:
+        print('Correct')
 
+    else:
+        print('Wrong')
     sys.exit(app.exec_())
