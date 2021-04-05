@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>663</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>856</width>
+    <height>650</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+	color: red;
+	font: bold, 14px;
+}
+QFrame {
+	background-color: grey;}
+QMainWindow{
+	background-color: black;
+}
+
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0" columnstretch="1,5">
+       <item row="0" column="0" rowspan="2">
+        <widget class="QFrame" name="frame_2">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	min-width: 200px;
+	min-height: 50px;
+	border-style:inset;
+	border-radius: 10px;
+	border-width: 2px;
+	background-color: rgb(20,20,20)	;
+}
+QPushButton:pressed {
+	border-color: blue;
+}
+QPushButton:checked {
+	border-color: green;}</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>25</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="dilationButton">
+            <property name="minimumSize">
+             <size>
+              <width>204</width>
+              <height>54</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>DILATION</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="erosionButton">
+            <property name="text">
+             <string>EROSION</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="openingButton">
+            <property name="text">
+             <string>OPENING</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="closingButton">
+            <property name="text">
+             <string>CLOSING</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="morphButton">
+            <property name="text">
+             <string>MORPH GRADIENT</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="blackhatButton">
+            <property name="text">
+             <string>BLACK HAT</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="tophatButton">
+            <property name="text">
+             <string>TOP HAT</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="chosekernelButton">
+            <property name="text">
+             <string>CHOSE KERNEL</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="sourceBox">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	min-width: 150px;
+	min-height: 25px;
+	border-style: outset;
+	border-radius: 10px;
+	border-color: green;
+	border-width: 3px;
+	background-color: rbg(20,20,20);
+}
+QPushButton:pressed {
+	border-color: blue;
+}
+QGroupBox{
+	background-color: gray;	
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+	subcontrol-position: top-center;
+    padding: 2 10px;
+	border-radius: 10px;
+	color: red;
+	font: 75 12pt &quot;Arial&quot;;
+    background-color: rgb(20,20,20);
+}
+</string>
+         </property>
+         <property name="title">
+          <string>Soucre Image</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="sourceLabel">
+            <property name="text">
+             <string>Choose your image by using button below</string>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="choseimButton">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Chose Image</string>
+            </property>
+            <property name="default">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="resultBox">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	min-width: 150px;
+	min-height: 25px;
+	border-style: outset;
+	border-radius: 10px;
+	border-color: red;
+	border-width: 3px;
+	background-color: rbg(20,20,20);
+}
+QPushButton:pressed {
+	border-color: blue;
+}
+QGroupBox{
+	background-color: gray;	
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+	subcontrol-position: top-center;
+    padding: 2 10px;
+	border-radius: 10px;
+	color: red;
+	font: bold, 12pt;
+    background-color: rgb(20,20,20);
+}</string>
+         </property>
+         <property name="title">
+          <string>Result Image</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QLabel" name="resultLabel">
+            <property name="text">
+             <string>Here will be the result of method you'we chose.</string>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="margin">
+             <number>10</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stepButton">
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Step by Step</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -18,10 +18,10 @@ class MyWindow(QMainWindow):
     def __init__(self):
         super(MyWindow, self).__init__()
 
-        self.kernel = np.ones((5, 5), np.uint8)
         self.dir = os.getcwd()
         self.current_date = f'{datetime.year}.{datetime.month}.{datetime.day}'
         self.current_method = dilation
+        self.kernels = [cv2.MORPH_RECT, cv2.MORPH_ELLIPSE, cv2.MORPH_CROSS]
         self.image_bw = None
         self.dilation = None
         self.erosion = None
@@ -30,6 +30,7 @@ class MyWindow(QMainWindow):
         self.grad = None
         self.tophat = None
         self.blackhat = None
+        self.kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
         self.ui = mwindow()
         self.ui.setupUi(self)
         self.__setup_ui()
@@ -43,7 +44,7 @@ class MyWindow(QMainWindow):
         self.ui.morphButton.clicked.connect(self.__morph_gradient_clicked)
         self.ui.blackhatButton.clicked.connect(self.__black_hat_clicked)
         self.ui.tophatButton.clicked.connect(self.__top_hat_clicked)
-
+        self.ui.chosekernelButton.clicked.connect(self.__change_kenrel_clicked)
 
     def __chose_image(self):
         dir = os.getcwd()
@@ -115,7 +116,10 @@ class MyWindow(QMainWindow):
 
     def __change_kenrel_clicked(self):
         Dialog = CreateKernel()
-        Dialog.exec_()
+        rsp = Dialog.exec_()
+        if rsp == QtWidgets.QDialog.Accepted:
+            self.kernel = cv2.getStructuringElement(self.kernels[Dialog.current_index], (Dialog.x, Dialog.y))
+            print(self.kernel)
 
     def clear_label(self):
         self.ui.sourceLabel.setText('Chose Your Image by pressing button bellow!')
