@@ -119,7 +119,6 @@ class MyWindow(QMainWindow):
         rsp = Dialog.exec_()
         if rsp == QtWidgets.QDialog.Accepted:
             self.kernel = cv2.getStructuringElement(self.kernels[Dialog.current_index], (Dialog.x, Dialog.y))
-            print(self.kernel)
 
     def clear_label(self):
         self.ui.sourceLabel.setText('Chose Your Image by pressing button bellow!')
