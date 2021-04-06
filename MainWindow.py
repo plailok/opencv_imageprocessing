@@ -45,18 +45,20 @@ class MyWindow(QMainWindow):
         self.ui.blackhatButton.clicked.connect(self.__black_hat_clicked)
         self.ui.tophatButton.clicked.connect(self.__top_hat_clicked)
         self.ui.chosekernelButton.clicked.connect(self.__change_kenrel_clicked)
+        self.ui.stepButton.clicked.connect(self.__step_by_step_clicked)
 
     def __chose_image(self):
         dir = os.getcwd()
         path = QFileDialog.getOpenFileName(self, 'Open Image', dir, "Image Files (*.png *.jpg *.bmp *.jpeg)")
-        self.image = path[0].split('/')[-1]
-        im = cv2.imread(self.image, 0)
-        ret, trash = cv2.threshold(im, 240, 255, cv2.THRESH_BINARY)
-        self.image_bw = self.image.split('.')[0] + '_binary.jpg'
-        cv2.imwrite(self.image_bw, trash)
-        image = QPixmap(self.image_bw)
-        new_image = image.scaled(540, 249, Qt.KeepAspectRatio, Qt.FastTransformation)
-        self.put_image(widget=self.ui.sourceLabel, image=new_image)
+        if path[0] != '':
+            self.image = path[0].split('/')[-1] if path[0] != '' else self.image
+            im = cv2.imread(self.image, 0)
+            ret, trash = cv2.threshold(im, 240, 255, cv2.THRESH_BINARY)
+            self.image_bw = self.image.split('.')[0] + '_binary.jpg'
+            cv2.imwrite(self.image_bw, trash)
+            image = QPixmap(self.image_bw)
+            new_image = image.scaled(540, 249, Qt.KeepAspectRatio, Qt.FastTransformation)
+            self.put_image(widget=self.ui.sourceLabel, image=new_image)
 
     def __dilation_clicked(self):
         self.current_method = dilation

@@ -24,12 +24,12 @@ class CreateKernel(QDialog):
         self.y = current_kernel[2]
         self.current_index = self.kernels_name.index(current_kernel[0])
         self.kernel = self.kernels_code[self.current_index]
-        print(self.x, self.y, self.kernel)
         self.__setup_ui()
 
     def __setup_ui(self):
         self.ui.typeButton.setText('Rectangle')
         self.ui.xSpinBox.valueChanged.connect(self.__x_changed)
+        # TODO сделать так, чтобы значение на спин боксе = текущему значению х у соответственно
         self.ui.xSpinBox.setMinimum(1)
         self.ui.xSpinBox.setMaximum(35)
         self.ui.xSpinBox.setSingleStep(2)
@@ -78,7 +78,7 @@ class StepByStep(QDialog):
         self.ui.stepButton_1.clicked.connect(self._step_1)
         self.ui.stepButton_2.clicked.connect(self._step_2)
         self.ui.stepButton_3.clicked.connect(self._step_3)
-        self.ui.exitButton.clicked.connect(self.exit)
+        self.ui.exitButton.clicked.connect(self.reject)
         self.ui.pushButton.clicked.connect(self.clear)
         self.ui.stepButton_2.setEnabled(False)
         self.ui.stepButton_3.setEnabled(False)
@@ -216,9 +216,6 @@ class StepByStep(QDialog):
         next_image = im.scaled(540, 249, Qt.KeepAspectRatio, Qt.FastTransformation)
         self.ui.nextStepLabel.setPixmap(next_image)
 
-    def exit(self):
-        pass
-
     def clear(self):
         image = self.info['STEP#0']
         method = self.info['method']
@@ -261,7 +258,6 @@ if __name__ == "__main__":
     rsp = dialog.exec_()
     if rsp == QtWidgets.QDialog.Accepted:
         print('Correct')
-
     else:
         print('Wrong')
     sys.exit(app.exec_())
